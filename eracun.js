@@ -180,7 +180,7 @@ streznik.post('/izpisiRacunBaza', function(zahteva, odgovor) {
         
           odgovor.setHeader('content-type', 'text/xml');
           odgovor.render('eslog', {
-            customer: stranka,
+            customer: stranka[0],
             vizualiziraj: true,
             postavkeRacuna: pesmi
           })  

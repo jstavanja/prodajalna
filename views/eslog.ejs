@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <% if (vizualiziraj) { %>
 <?xml-stylesheet type="text/xsl" href="../eSLOG/vizualizacija.xslt"?>
-<% } %>
+<% } %>
 <IzdaniRacunEnostavni xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xds="http://uri.etsi.org/01903/v1.1.1#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.gzs.si/e-poslovanje/sheme/eSLOG_1-6_EnostavniRacun.xsd">
 	<Racun Id="data">
 		<!-- verzija priročnika -->
@@ -173,19 +173,19 @@
 			<NazivNaslovPodjetja>
 				<VrstaPartnerja>BY</VrstaPartnerja>
 				<NazivPartnerja>
-					<NazivPartnerja1><%= customer[0].FirstName %> <%= customer[0].LastName %> </NazivPartnerja1>
-					<NazivPartnerja2><%= customer[0].Company %></NazivPartnerja2>
+					<NazivPartnerja1><%= customer.FirstName %> <%= customer.LastName %> </NazivPartnerja1>
+					<NazivPartnerja2><%= customer.Company %></NazivPartnerja2>
 					<NazivPartnerja3></NazivPartnerja3>
 					<NazivPartnerja4></NazivPartnerja4>
 				</NazivPartnerja>
 				<Ulica>
-					<Ulica1><%= customer[0].Address %></Ulica1>
+					<Ulica1><%= customer.Address %></Ulica1>
 					<Ulica2></Ulica2>
 					<Ulica3></Ulica3>
 				</Ulica>
-				<Kraj><%= customer[0].City %></Kraj>
-				<NazivDrzave><%= customer[0].Country %></NazivDrzave>
-				<PostnaStevilka><%= customer[0].PostalCode %></PostnaStevilka>
+				<Kraj><%= customer.City %></Kraj>
+				<NazivDrzave><%= customer.Country %></NazivDrzave>
+				<PostnaStevilka><%= customer.PostalCode %></PostnaStevilka>
 				<KodaDrzave></KodaDrzave>
 			</NazivNaslovPodjetja>
 			<FinancniPodatkiPodjetja>
@@ -210,14 +210,14 @@
 			</ReferencniPodatkiPodjetja>
 			<KontaktiPodjetja>
 				<KontaktnaOseba>
-					<ImeOsebe><%= customer[0].FirstName %> <%= customer[0].LastName %> (<%= customer[0].Email %>)</ImeOsebe>
+					<ImeOsebe><%= customer.FirstName %> <%= customer.LastName %> (<%= customer.Email %>)</ImeOsebe>
 				</KontaktnaOseba>
 				<Komunikacije>
-					<StevilkaKomunikacije><%= customer[0].Phone %></StevilkaKomunikacije>
+					<StevilkaKomunikacije><%= customer.Phone %></StevilkaKomunikacije>
 					<VrstaKomunikacije>TE</VrstaKomunikacije>
 				</Komunikacije>
 				<Komunikacije>
-					<StevilkaKomunikacije><%= customer[0].Fax %></StevilkaKomunikacije>
+					<StevilkaKomunikacije><%= customer.Fax %></StevilkaKomunikacije>
 					<VrstaKomunikacije>FX</VrstaKomunikacije>
 				</Komunikacije>
 			</KontaktiPodjetja>
