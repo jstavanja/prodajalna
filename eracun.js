@@ -137,6 +137,9 @@ var pesmiIzRacuna = function(racunId, callback) {
         console.log("Prislo je do napake pri prebiranju pesmi iz racuna.");
         callback(napaka); // ce je napaka, izpise napako v konzolo, vrne pa podroben opis o napaki
       } else {
+        for (var i=0; i<vrstice.length; i++) {
+          vrstice[i].stopnja = davcnaStopnja((vrstice[i].opisArtikla.split(' (')[1]).split(')')[0], vrstice[i].zanr);
+        }
         callback(vrstice); // vrne vrstice z info o stranki
       }
     })
