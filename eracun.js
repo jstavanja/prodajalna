@@ -133,7 +133,12 @@ var pesmiIzRacuna = function(racunId, callback) {
     Track.TrackId IN (SELECT InvoiceLine.TrackId FROM InvoiceLine, Invoice \
     WHERE InvoiceLine.InvoiceId = Invoice.InvoiceId AND Invoice.InvoiceId = " + racunId + ")",
     function(napaka, vrstice) {
-      console.log(vrstice);
+      if(napaka) {
+        console.log("Prislo je do napake pri prebiranju pesmi iz racuna.");
+        callback(napaka); // ce je napaka, izpise napako v konzolo, vrne pa podroben opis o napaki
+      } else {
+        callback(vrstice); // vrne vrstice z info o stranki
+      }
     })
 }
 
@@ -141,15 +146,50 @@ var pesmiIzRacuna = function(racunId, callback) {
 var strankaIzRacuna = function(racunId, callback) {
     pb.all("SELECT Customer.* FROM Customer, Invoice \
             WHERE Customer.CustomerId = Invoice.CustomerId AND Invoice.InvoiceId = " + racunId,
+            
     function(napaka, vrstice) {
-      console.log(vrstice);
+      if(napaka) {
+        console.log("Prislo je do napake pri prebiranju stranke iz racuna.");
+        callback(napaka); // ce je napaka, izpise napako v konzolo, vrne pa podroben opis o napaki
+      } else {
+        callback(vrstice); // vrne vrstice z info o stranki
+      }
     })
 }
 
 // Izpis računa v HTML predstavitvi na podlagi podatkov iz baze
 streznik.post('/izpisiRacunBaza', function(zahteva, odgovor) {
-  odgovor.end();
-})
+  
+  var obrazec = new formidable.IncomingForm();
+  
+  obrazec.parse(zahteva, function(napaka1, polja, datoteke) {
+    
+    if(!napaka1) {
+    
+      var idRacuna = parseInt(polja.seznamRacunov);
+      
+      pesmiIzRacuna(idRacuna, function(pesmi) {
+      
+        strankaIzRacuna(idRacuna, function(stranka) {
+          
+          // console.log(pesmi);
+          // console.log(stranka);
+        
+          odgovor.setHeader('content-type', 'text/xml');
+          odgovor.render('eslog', {
+            customer: stranka,
+            vizualiziraj: true,
+            postavkeRacuna: pesmi
+          })  
+        });
+      });
+    }
+    else {
+      console.log(napaka1);
+    }
+
+  });
+});
 
 // Izpis računa v HTML predstavitvi ali izvorni XML obliki
 streznik.get('/izpisiRacun/:oblika', function(zahteva, odgovor) {
